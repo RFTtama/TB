@@ -1,0 +1,26 @@
+#pragma once
+void init(void);
+char menu(void);
+void startWait(void);
+void data_check(void);
+int rank(void);
+int getRankChange(void);
+int getRankDiv(void);
+void dataSave(void);
+void itemc(int);
+void sk2(void);
+void liker(void);
+void story(char[256], int);
+void SetColor(void);
+void calLV(int, int*);
+void datalimit(int);
+void Perform(int);
+void outFileError(void);
+void errorOutput(void);
+void nextStage(void);
+void c23ptc(void);
+void decc23(void);
+void painin(void);
+void espain(void);
+int getRank(int);
+void calRankBonus(void);
