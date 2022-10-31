@@ -377,7 +377,7 @@ class Data
 		}
 
 		double GetAvoidPer(void) {
-			double per = 200.0;
+			double per = 100.0;
 			for (int i = 0; i < this->avoid; i++) {
 				per /= 2.0;
 			}
