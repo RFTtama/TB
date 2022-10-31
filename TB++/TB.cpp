@@ -160,7 +160,7 @@ int main(void)
 			dislike = 0;
 		}
 	}
-	if (dislike >= 2) {
+	if (dislike >= 4) {
 		remove("LV.tb");
 		remove("LV2.tb");
 		printf("\a\n複数回に及ぶ不正が確認されたため、ゲームデータをリセットします\n");
