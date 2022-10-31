@@ -4,8 +4,7 @@
 
 /*define*/
 //#define CHECK_AI_RATE
-//#define OUT_AI_RATE
-//#define ENABLE_OVERWEIGHT_MODE
+#define OUT_AI_RATE
 
 #define PLUS 0
 #define MINU 1
