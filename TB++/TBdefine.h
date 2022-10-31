@@ -2,8 +2,8 @@
 /*Macros*/
 #define savepatt1 name, data1[MLV], data1[Mxp], stgProgress, fpo, item, stage, pla.GetSkill(true), ac, skpt
 #define savepatt2 APS.GetAIrate(), dislike, total_b, wlpattern[0], wlpattern[1] \
-, s_rate, dominated, skdata[0], skldata[0], skdata[1], skldata[1] \
-, skdata[2], skldata[2], VERSION, unlock_key, firstCont, calcDmg, APS.GetStreak(), APS.GetMaxRate() \
+, s_rate, dominated, sklXp[0], sklLv[0], sklXp[1], sklLv[1] \
+, sklXp[2], sklLv[2], VERSION, unlock_key, firstCont, calcDmg, APS.GetStreak(), APS.GetMaxRate() \
 , cfg.getUnlocked(), APS.GetAIdecide(0), APS.GetAIdecide(1), APS.GetAIdecide(2), APS.GetAIdecide(3)\
 , APS.GetAIdecide(4), APS.GetAIdecide(5), APS.GetAIdecide(6), APS.GetAIdecide(7), APS.GetAIdecide(8)\
 , APS.GetAIdecide(9), APS.GetAIdecide(10), APS.GetAIdecide(11), APS.GetAIdecide(12), APS.GetAIdecide(13)\

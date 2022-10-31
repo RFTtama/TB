@@ -68,7 +68,7 @@ int main(void)
 		}
 		fscanf_s(LV, "%d%d%d%d%d%d%d", &rate, &dislike, &total_b, &wlpattern[0], &wlpattern[1], &s_rate, &dominated);
 		for (a = 0; a < TOTAL_SKL; a++) {
-			fscanf_s(LV, "%d%d", &skdata[a], &skldata[a]);
+			fscanf_s(LV, "%d%d", &sklXp[a], &sklLv[a]);
 		}
 		fscanf_s(LV, "%d%d%lld%lld%d%d%d", &oldver, &unlock_key, &firstCont, &calcDmg, &strea, &maxRate, &unlocked);
 		for (a = 0; a < 20; a++) {
@@ -202,11 +202,11 @@ int main(void)
 	}
 	if (pla.GetSkill(true) == 0) {
 		printf("キャラクターの族性スキルを選択してください。\n\n");
-		printf("1:\"竜族 Lv:%d\" 火炎放射を選択した場合効果が発動する。\n", skldata[0]);
+		printf("1:\"竜族 Lv:%d\" 火炎放射を選択した場合効果が発動する。\n", sklLv[0]);
 		printf("効果: 相手にダメージを与え、自分の能力が弱体化する。\nこの能力は1回の対戦で1回使え、攻撃を命中させる度に威力が上昇する。\n\n");
-		printf("2:\"魔族 Lv:%d\" 特殊攻撃を命中させた際に効果が発動する。\n", skldata[1]);
+		printf("2:\"魔族 Lv:%d\" 特殊攻撃を命中させた際に効果が発動する。\n", sklLv[1]);
 		printf("効果: 当たった相手にダメージを与え能力を弱体化させるスキルを発動する。命中率はスキル発動に失敗する度に上昇する。\nこの能力発動時に命中率はリセットされる。\n\n");
-		printf("3:\"機械族 Lv:%d\" 連続で攻撃を命中させると効果が発動する。\n", skldata[2]);
+		printf("3:\"機械族 Lv:%d\" 連続で攻撃を命中させると効果が発動する。\n", sklLv[2]);
 		printf("効果: シールドを獲得する。\nこの値は連続で攻撃を命中させる度に増加する。\n\n");
 		a = 0;
 		do {
@@ -215,20 +215,20 @@ int main(void)
 			switch (pla.GetSkill(true)) {
 			case 1:
 				printf("\aあなたは\"竜族\"を選択しました。\n");
-				ac = skldata[0];
-				skpt = skdata[0];
+				ac = sklLv[0];
+				skpt = sklXp[0];
 				a = 1;
 				break;
 			case 2:
 				printf("\aあなたは\"魔族\"を選択しました。\n");
-				ac = skldata[1];
-				skpt = skdata[1];
+				ac = sklLv[1];
+				skpt = sklXp[1];
 				a = 1;
 				break;
 			case 3:
 				printf("\aあなたは\"機械族\"を選択しました。\n");
-				ac = skldata[2];
-				skpt = skdata[2];
+				ac = sklLv[2];
+				skpt = sklXp[2];
 				a = 1;
 				break;
 			}
@@ -1734,8 +1734,8 @@ int main(void)
 				printf("現在のポイント:%d +%d\n\n", fpo, fpo - oldPo);
 				printf("スキルレベル:%d\n", (ac + 1));
 				printf("スキルポイント:%.0f%%\n\n", (skpt / (float)MAX_SKPT * 100.0));
-				skldata[pla.GetSkill(true) - 1] = ac;
-				skdata[pla.GetSkill(true) - 1] = skpt;
+				sklLv[pla.GetSkill(true) - 1] = ac;
+				sklXp[pla.GetSkill(true) - 1] = skpt;
 				a = 0;
 				calLV(data1[Mxp], &data1[MLV]);
 				printf("現在のLV:%d (+%d)\n\n", data1[MLV], (data1[MLV] - oldLvl));

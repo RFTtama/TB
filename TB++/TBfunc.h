@@ -12,8 +12,8 @@ void init(void) {
 		itemn[a] = 0;
 	}
 	for (a = 0; a < TOTAL_SKL; a++) {
-		skdata[a] = 0;
-		skldata[a] = 0;
+		sklXp[a] = 0;
+		sklLv[a] = 0;
 	}
 	dislike = 0;
 	/*chardata init*/
@@ -424,8 +424,8 @@ void nextStage(void) {
 	}
 	stgProgress = 0;
 	for (int i = 0; i < TOTAL_SKL; i++) {
-		skdata[i] = 0;
-		skldata[i] = 0;
+		sklXp[i] = 0;
+		sklLv[i] = 0;
 	}
 	ac = 0;
 	skpt = 0;
