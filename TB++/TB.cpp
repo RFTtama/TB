@@ -14,14 +14,11 @@ int main(void)
 	unsigned char plaCruciFlg = 0;//not escape
 	char charbox[ENAMES];
 	unsigned char enemyVariety = 0;
-	unsigned char tier = 0;
-	int ent3 = 0;
-	char dark = 0;
-	unsigned char tag = 0;
+	unsigned char strongBossTier = 0;
+	char shadowBossFlg = 0;
 	//unsigned char bond = 0;
 	const unsigned char Eparge[] = { 10, 10, 20, 20, 20, 20, 19, 19 };
 	unsigned int pen = 0;
-	float per = 0;
 	char spsk1 = 0;
 	unsigned char deadflag = 0;
 	unsigned char Mres[3] = { 1, 0, 1 };
@@ -236,46 +233,49 @@ int main(void)
 	}
 	itemc(READ);
 	printf("\n");
+
+	int strongBossSpawnChance = 0;
+
 	if (stage == 2) {
 		randchar(24);
 		timer(100);
 		enemyVariety = 1;
-		ent3 = 20;//5.00%
+		strongBossSpawnChance = 20;//5.00%
 	}
 	else if (stgProgress < 1) {
 		printf("*‡T*\n");
 		enemyVariety = 2;
-		ent3 = 100;//1.00%
+		strongBossSpawnChance = 100;//1.00%
 	}
 	else if (stgProgress < 2) {
 		printf("*‡U*\n");
 		enemyVariety = 3;
-		ent3 = 90;//1.11%
+		strongBossSpawnChance = 90;//1.11%
 	}
 	else if (stgProgress < 3) {
 		printf("*‡V*\n");
 		enemyVariety = 4;
-		ent3 = 80;//1.25%
+		strongBossSpawnChance = 80;//1.25%
 	}
 	else if (stgProgress < 4) {
 		printf("*‡W*\n");
 		enemyVariety = 5;
-		ent3 = 70;//1.43%
+		strongBossSpawnChance = 70;//1.43%
 	}
 	else if (stgProgress < 5) {
 		printf("*‡X*\n");
 		enemyVariety = 6;
-		ent3 = 60;//1.67%
+		strongBossSpawnChance = 60;//1.67%
 	}
 	else if (stgProgress < 6) {
 		printf("**‡Y**\n");
 		enemyVariety = 7;
-		ent3 = 50;//2.00%
+		strongBossSpawnChance = 50;//2.00%
 	}
 	else {
 		printf("***FINAL***\n");
 		enemyVariety = 8;
-		ent3 = 40;//2.50%
+		strongBossSpawnChance = 40;//2.50%
 	}
 	calLV(data1[Mxp], &data1[MLV]);
 	oldLvl = data1[MLV];
@@ -386,7 +386,7 @@ int main(void)
 				break;
 			case 3:
 				if (itemn[3] - 1 >= 0) {
-					ent3 = 3;
+					strongBossSpawnChance = 3;
 					itemn[3]--;
 					nofi = 4;
 					printf("‰à‚ñ‚¾‹L‰¯oŒ»Šm—¦ã¸!!\n");
@@ -438,7 +438,7 @@ int main(void)
 					}
 					else {
 						printf("Šè‚¢‚Í‰½ŽÒ‚©‚É‚æ‚Á‚Ä‚©‚«Á‚³‚ê‚½c\n");
-						dark = 1;
+						shadowBossFlg = 1;
 						nofi = 10;
 					}
 					timer(500);
@@ -459,7 +459,7 @@ int main(void)
 	}
 	itemc(WRITE);
 	dataSave();
-	tag = stage;
+	unsigned char eneNameTag = stage;
 	printf("\n");
 	switch (pla.GetSkill(true)) {
 	case 1:
@@ -525,7 +525,7 @@ int main(void)
 	printf("\r");
 	t = time(NULL);
 	localtime_s(&tm, &t);
-	if ((dark == 1) && (randnum(10) == 0)) {
+	if ((shadowBossFlg == 1) && (randnum(10) == 0)) {
 		printf("\a");
 		randchar(24);
 		printf("\n");
@@ -553,7 +553,7 @@ int main(void)
 //		SG[1][0] = 4;
 		SGM.SetMaxSG(4, Ene);
 	}
-	else if (randnum(ent3) == 0) {//‰à‚ñ‚¾‹L‰¯
+	else if (randnum(strongBossSpawnChance) == 0) {//‰à‚ñ‚¾‹L‰¯
 		printf("\a_/_/BOSS_/_/\n");
 		ene.SetHP(1, D_EQUAL);
 		ene.SetAT(1, D_EQUAL);
@@ -734,7 +734,7 @@ int main(void)
 		}
 		EM.SetEI(enemyVariety);
 	}
-	EM.GetEn(tag, charbox);
+	EM.GetEn(eneNameTag, charbox);
 	timer(100);
 	pla.SetDmgBoost(true);
 	pla.SetShield(true);
@@ -805,7 +805,7 @@ int main(void)
 		else*/
 		SetColor();
 		/* ‰à‚ñ‚¾‹L‰¯ˆ— */
-		if ((EM.GetEi() == 8) && (data2[Etier] != tier)) {
+		if ((EM.GetEi() == 8) && (data2[Etier] != strongBossTier)) {
 			fcyellow;
 			if (data2[Etier] == 1) {//ƒeƒBƒA2
 				ene.SetHP(1000, D_EQUAL);
@@ -826,7 +826,7 @@ int main(void)
 				pla.SetSkillFlg(false);
 				printf("\aƒXƒLƒ‹‚ª–³Œø‰»‚³‚ê‚½B\n");
 			}
-			tier = data2[Etier];
+			strongBossTier = data2[Etier];
 			SetColor();
 		}
 		if ((data2[Etier] >= 5) && (EM.GetEi() == 8)) {
