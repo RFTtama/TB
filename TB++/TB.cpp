@@ -6,10 +6,10 @@ int main(void)
 {
 	/* variable */
 	int a, b, c;
-	short int k1 = 10;//koudou 1
-	short int k2 = 10;//koudou 2
-	short int ak1 = 10;//after koudou 1
-	short int ak2 = 10;//after koudou 2
+	short int plaCommand = 10;
+	short int eneCommand = 10;
+	short int plaCommandBef = 10;//after koudou 1
+	short int eneCommandBef = 10;//after koudou 2
 	short int ak = 10;
 	unsigned char nsp = 0;//not escape
 	char charbox[ENAMES];
@@ -51,7 +51,7 @@ int main(void)
 	APS.SetAIdecide(decideData);
 	APS.InitAIdecide();
 	init_genrand((unsigned int)time(NULL));
-	APS.SetAk(&ak1, &ak2, &ak);
+	APS.SetAk(&plaCommandBef, &eneCommandBef, &ak);
 	data_check();
 	if (fopen_s(&LV, "LV.tb", "r") == 0) {
 		fseek(LV, 11L, SEEK_SET);
@@ -932,12 +932,12 @@ int main(void)
 		printf("\n");
 		/* 行動選択 */
 		if (T.GetTurn() > 0 && stgProgress > 0) {
-//			k2 = AIpat(ak1 - 1, ak2);
-			k2 = APS.AIpat();
+//			eneCommand = AIpat(plaCommandBef - 1, eneCommandBef);
+			eneCommand = APS.AIpat();
 		}
 		else {
-			while (ak2 == k2) {
-				k2 = randnum(4);
+			while (eneCommandBef == eneCommand) {
+				eneCommand = randnum(4);
 			}
 		}
 		do {
@@ -973,12 +973,12 @@ int main(void)
 				printf(" 火炎放射:5(+%d)", data1[Mskc]);
 			}
 			printf("\n");
-			connum_int16(&k1);
-			if ((k1 == 5) && (pla.GetSkill(false) == 1) && (spsk1 > 0)) {
+			connum_int16(&plaCommand);
+			if ((plaCommand == 5) && (pla.GetSkill(false) == 1) && (spsk1 > 0)) {
 				break;
 			}
-		} while ((k1 == ak1) || (k1 < 1) || (k1 > 4));
-		if (k1 == 5) {
+		} while ((plaCommand == plaCommandBef) || (plaCommand < 1) || (plaCommand > 4));
+		if (plaCommand == 5) {
 			printf("%sは火炎放射を使った!!\n", name);
 			float dmgcntr = 0.0;
 			for (a = 1; a <= data1[Mskc]; a++) {
@@ -987,10 +987,10 @@ int main(void)
 			ene.SetDmg((int)(dmgcntr), D_EQUAL);
 			spsk1 = -1;
 			data1[Mskc] = -1;
-			k1 = 2;
+			plaCommand = 2;
 		}
-		pla.PatternPlus(k1 - 1);
-		ene.PatternPlus(k2);
+		pla.PatternPlus(plaCommand - 1);
+		ene.PatternPlus(eneCommand);
 		/*
 		if (randnum(100) <= (99 - dislike) / 2) {
 			printf("プレイヤーと%sは息がぴったりだ!!\n", name);
@@ -998,13 +998,13 @@ int main(void)
 			bond = 1;
 		}
 		*/
-		ak = k1;
+		ak = plaCommand;
 		if (T.GetTurn() > 0) {
-//			SaveAI(ak1 - 1, ak2);
+//			SaveAI(plaCommandBef - 1, eneCommandBef);
 			APS.SaveAI();
 		}
-		ak1 = k1;
-		ak2 = k2;
+		plaCommandBef = plaCommand;
+		eneCommandBef = eneCommand;
 /*		if (SG[0][1] == SG[0][0]) {
 			chardata[0].Fs = true;
 		}
@@ -1012,7 +1012,7 @@ int main(void)
 			chardata[1].Fs = true;
 		}*/
 		/******************************************************************************************************************/
-		if ((k1 == 1) && (k2 == 0)) {//通常　通常
+		if ((plaCommand == 1) && (eneCommand == 0)) {//通常　通常
 			ene.Atk();
 			pla.Atk();
 			sk1cp;
@@ -1022,7 +1022,7 @@ int main(void)
 			Perform(2);
 			c23ptc();
 		}
-		else if ((k1 == 1) && (k2 == 1)) {//通常　特殊
+		else if ((plaCommand == 1) && (eneCommand == 1)) {//通常　特殊
 			ene.SpAtk();
 			pla.Boost();
 			ent;
@@ -1031,7 +1031,7 @@ int main(void)
 			ene.Decr();
 			decc23();
 		}
-		else if ((k1 == 1) && (k2 == 2)) {//通常　回避
+		else if ((plaCommand == 1) && (eneCommand == 2)) {//通常　回避
 			if (randnum(100) < ene.GetAvoidPer()) {
 				ene.Heal();
 				if (ene.GetDmg() < 0)ene.SetDmg(ene.GetDmg() / 2, D_EQUAL);
@@ -1051,7 +1051,7 @@ int main(void)
 				c23ptc();
 			}
 		}
-		else if ((k1 == 1) && (k2 == 3)) {//通常　壁
+		else if ((plaCommand == 1) && (eneCommand == 3)) {//通常　壁
 			pla.Atk();
 			sk1cp;
 			printf("%sの通常攻撃!! %sは攻撃反射に失敗した!!\n", name, charbox);
@@ -1060,7 +1060,7 @@ int main(void)
 			c23ptc();
 		}
 		/******************************************************************************************************************/
-		else if ((k1 == 2) && (k2 == 0)) {//特殊　通常
+		else if ((plaCommand == 2) && (eneCommand == 0)) {//特殊　通常
 			if (spsk1 < 0) {
 				printf("%sは%sの灼熱の炎で燃やされている!!\n", charbox, name);
 				pla.Weak();
@@ -1080,7 +1080,7 @@ int main(void)
 				c23ptc();
 			}
 		}
-		else if ((k1 == 2) && (k2 == 1)) {//特殊　特殊
+		else if ((plaCommand == 2) && (eneCommand == 1)) {//特殊　特殊
 			if (spsk1 < 0) {
 				printf("%sは%sの灼熱の炎で燃やされている!!\n", charbox, name);
 				pla.Weak();
@@ -1103,7 +1103,7 @@ int main(void)
 				c23ptc();
 			}
 		}
-		else if ((k1 == 2) && (k2 == 2)) {//特殊　回避
+		else if ((plaCommand == 2) && (eneCommand == 2)) {//特殊　回避
 			if (spsk1 < 0) {
 				printf("%sは%sの灼熱の炎で燃やされている!!\n", charbox, name);
 				pla.Weak();
@@ -1134,7 +1134,7 @@ int main(void)
 				}
 			}
 		}
-		else if ((k1 == 2) && (k2 == 3)) {//特殊　壁
+		else if ((plaCommand == 2) && (eneCommand == 3)) {//特殊　壁
 			if (spsk1 < 0) {
 				printf("%sは%sの灼熱の炎で燃やされている!!\n", charbox, name);
 				pla.Weak();
@@ -1150,7 +1150,7 @@ int main(void)
 			}
 		}
 		/******************************************************************************************************************/
-		else if ((k1 == 3) && (k2 == 0)) {//回避　通常
+		else if ((plaCommand == 3) && (eneCommand == 0)) {//回避　通常
 			if (randnum(100) < (pla.GetAvoidPer()) && !nsp) {
 				pla.Shield();
 				pla.Heal();
@@ -1167,7 +1167,7 @@ int main(void)
 				ene.Decr();
 			}
 		}
-		else if ((k1 == 3) && (k2 == 1)) {//回避　特殊
+		else if ((plaCommand == 3) && (eneCommand == 1)) {//回避　特殊
 			ent;
 			enttier;
 			if (randnum(100) < pla.GetAvoidPer() / 2 && !nsp) {
@@ -1186,7 +1186,7 @@ int main(void)
 				ene.Decr();
 			}
 		}
-		else if ((k1 == 3) && (k2 == 2)) {//回避　回避
+		else if ((plaCommand == 3) && (eneCommand == 2)) {//回避　回避
 			pla.Heal();
 			ene.Heal();
 			pla.Shield();
@@ -1195,7 +1195,7 @@ int main(void)
 			printf("%sと%sの回避行動… お互いに睨みあっている。\n", name, charbox);
 			Perform(24);
 		}
-		else if ((k1 == 3) && (k2 == 3)) {//回避　壁
+		else if ((plaCommand == 3) && (eneCommand == 3)) {//回避　壁
 			pla.Shield();
 			pla.Heal();
 			painin();
@@ -1203,23 +1203,23 @@ int main(void)
 			Perform(24);
 		}
 		/******************************************************************************************************************/
-		else if ((k1 == 4) && (k2 == 0)) {//壁　通常
+		else if ((plaCommand == 4) && (eneCommand == 0)) {//壁　通常
 			ene.Atk();
 			printf("%sは特殊反射の構えに入っている… %sの通常攻撃!!\n", name, charbox);
 			ene.Decr();
 		}
-		else if ((k1 == 4) && (k2 == 1)) {//壁　特殊
+		else if ((plaCommand == 4) && (eneCommand == 1)) {//壁　特殊
 			pla.Ref();
 			ene.Boost();
 			printf("%sの特殊攻撃!! しかし%sの特殊反射壁によって反射した!!\n", charbox, name);
 			Perform(4);
 		}
-		else if ((k1 == 4) && (k2 == 2)) {//壁　回避
+		else if ((plaCommand == 4) && (eneCommand == 2)) {//壁　回避
 			ene.Heal();
 			ene.Shield();
 			printf("%sは特殊反射の構えに入っている… %sは回避運動をしている…\n", name, charbox);
 		}
-		else if ((k1 == 4) && (k2 == 3)) {//壁　壁
+		else if ((plaCommand == 4) && (eneCommand == 3)) {//壁　壁
 			painin();
 			printf("お互いに睨みあっている\n");
 		}
@@ -1231,7 +1231,7 @@ int main(void)
 			printf("\nセット!!\n");
 			set_flg = true;
 		}
-		if ((ak1 == 1) || (ak1 == 2))pen++; else pen = 0;
+		if ((plaCommandBef == 1) || (plaCommandBef == 2))pen++; else pen = 0;
 		if (pen > 4) { 
 			Perform(25);
 		}
@@ -1251,7 +1251,7 @@ int main(void)
 			break;
 		case 2:
 			timer(1);
-			if ((pla.GetDmg() > 0) && ((ak2 == 0) || (ak2 == 1))) {
+			if ((pla.GetDmg() > 0) && ((eneCommandBef == 0) || (eneCommandBef == 1))) {
 				if (randnum(2) == 0 || data2[Ecnt] == 0) {
 					data2[Ecnt]++;
 					printf("%sは力をためている…\n", charbox);
@@ -1295,7 +1295,7 @@ int main(void)
 			}
 			break;
 		case 8:
-			if ((((ak2 == 0) || (ak2 == 1)) && (pla.GetDmg() > 0))) {
+			if ((((eneCommandBef == 0) || (eneCommandBef == 1)) && (pla.GetDmg() > 0))) {
 				if (randnum(100) <= argePer) {
 					if ((data1[Mill] != 0) && (data1[Mill] != 4)) {
 						data1[Mill] = 4;
@@ -1412,17 +1412,17 @@ int main(void)
 		if (ene.GetDmg() > 0) {
 			rageHP[1][1] = rageHP[1][1] + ene.GetDmg();
 		}
-		if ((SGM.GetSf(Ene)) && ((ak2 == 0) || (ak2 == 1)) && (pla.GetDmg() > 0)) {
+		if ((SGM.GetSf(Ene)) && ((eneCommandBef == 0) || (eneCommandBef == 1)) && (pla.GetDmg() > 0)) {
 			fcred;
 			printf("\a%sは怯んだ!!\n", name);
 			SetColor();
 			pla.Crit();
 			SGM.ClearSF(Ene);
 		}
-		else if ((SGM.GetSf(Ene)) && ((ak2 == 0) || (ak2 == 1))) {
+		else if ((SGM.GetSf(Ene)) && ((eneCommandBef == 0) || (eneCommandBef == 1))) {
 			SGM.ClearSF(Ene);
 		}
-		if ((SGM.GetSf(Pla)) && ((ak1 == 1) || (ak1 == 2)) && (ene.GetDmg() > 0)) {
+		if ((SGM.GetSf(Pla)) && ((plaCommandBef == 1) || (plaCommandBef == 2)) && (ene.GetDmg() > 0)) {
 			fcred;
 			printf("\a%sは怯んだ!!\n", charbox);
 			SetColor();
@@ -1431,7 +1431,7 @@ int main(void)
 			pain = 0;
 			SGM.ClearSF(Pla);
 		}
-		else if ((SGM.GetSf(Pla)) && ((ak1 == 1) || (ak1 == 2))) {
+		else if ((SGM.GetSf(Pla)) && ((plaCommandBef == 1) || (plaCommandBef == 2))) {
 			SGM.ClearSF(Pla);
 		}
 		if ((ene.GetSkill(false) == 10) && (ene.GetDmg() > 0))pain = pain + (int)(ene.GetDmg() * 0.1);
