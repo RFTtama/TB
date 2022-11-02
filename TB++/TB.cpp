@@ -8,13 +8,12 @@ int main(void)
 	int a, b, c;
 	short int plaCommand = 10;
 	short int eneCommand = 10;
-	short int plaCommandBef = 10;//after koudou 1
-	short int eneCommandBef = 10;//after koudou 2
-	short int ak = 10;
-	unsigned char nsp = 0;//not escape
+	short int plaCommandBef = 10;
+	short int eneCommandBef = 10;
+	short int plaSelectedCommand = 10;
+	unsigned char plaCruciFlg = 0;//not escape
 	char charbox[ENAMES];
-	unsigned char change = 0;
-	int save = 0;
+	unsigned char enemyVariety = 0;
 	unsigned char tier = 0;
 	int ent3 = 0;
 	char dark = 0;
@@ -51,7 +50,7 @@ int main(void)
 	APS.SetAIdecide(decideData);
 	APS.InitAIdecide();
 	init_genrand((unsigned int)time(NULL));
-	APS.SetAk(&plaCommandBef, &eneCommandBef, &ak);
+	APS.SetAk(&plaCommandBef, &eneCommandBef, &plaSelectedCommand);
 	data_check();
 	if (fopen_s(&LV, "LV.tb", "r") == 0) {
 		fseek(LV, 11L, SEEK_SET);
@@ -240,42 +239,42 @@ int main(void)
 	if (stage == 2) {
 		randchar(24);
 		timer(100);
-		change = 1;
+		enemyVariety = 1;
 		ent3 = 20;//5.00%
 	}
 	else if (stgProgress < 1) {
 		printf("*áT*\n");
-		change = 2;
+		enemyVariety = 2;
 		ent3 = 100;//1.00%
 	}
 	else if (stgProgress < 2) {
 		printf("*áU*\n");
-		change = 3;
+		enemyVariety = 3;
 		ent3 = 90;//1.11%
 	}
 	else if (stgProgress < 3) {
 		printf("*áV*\n");
-		change = 4;
+		enemyVariety = 4;
 		ent3 = 80;//1.25%
 	}
 	else if (stgProgress < 4) {
 		printf("*áW*\n");
-		change = 5;
+		enemyVariety = 5;
 		ent3 = 70;//1.43%
 	}
 	else if (stgProgress < 5) {
 		printf("*áX*\n");
-		change = 6;
+		enemyVariety = 6;
 		ent3 = 60;//1.67%
 	}
 	else if (stgProgress < 6) {
 		printf("**áY**\n");
-		change = 7;
+		enemyVariety = 7;
 		ent3 = 50;//2.00%
 	}
 	else {
 		printf("***FINAL***\n");
-		change = 8;
+		enemyVariety = 8;
 		ent3 = 40;//2.50%
 	}
 	calLV(data1[Mxp], &data1[MLV]);
@@ -566,7 +565,7 @@ int main(void)
 		SGM.SetMaxSG(16, Ene);
 	}
 	else {
-		for (a = 0, b = 0; a < change; a++) {
+		for (a = 0, b = 0; a < enemyVariety; a++) {
 			b = b + Eparge[a];
 		}
 		c = randnum(b);
@@ -575,14 +574,14 @@ int main(void)
 		while (1) {
 			b = b + Eparge[a];
 			if (c < b) {
-				change = a;
+				enemyVariety = a;
 				break;
 			}
 			a++;
 		}
 		switch (stage) {
 		case 0:
-			switch (change) {
+			switch (enemyVariety) {
 			case 0://É]ÉìÉr
 				ene.SetHP(900, D_EQUAL);
 				ene.SetAT(50, D_EQUAL);
@@ -653,7 +652,7 @@ int main(void)
 			}
 			break;
 		case 1:
-			switch (change) {
+			switch (enemyVariety) {
 			case 0://ÉtÉçÅ[Ég
 				ene.SetHP(pla.GetHP() / 2, D_EQUAL);
 				ene.SetAT(pla.GetAT(), D_EQUAL);
@@ -719,7 +718,7 @@ int main(void)
 			break;
 
 		case 3://ãUÇËÇÃäÛñ]
-			switch (change) {
+			switch (enemyVariety) {
 			case 0:
 				printf("\a_/_/Boss_/_/");
 				ene.SetHP(2000, D_EQUAL);
@@ -733,7 +732,7 @@ int main(void)
 			}
 			break;
 		}
-		EM.SetEI(change);
+		EM.SetEI(enemyVariety);
 	}
 	EM.GetEn(tag, charbox);
 	timer(100);
@@ -960,7 +959,7 @@ int main(void)
 				SetColor();
 			}
 			printf(" : 2 âÒîçsìÆ");
-			if (!nsp) {
+			if (!plaCruciFlg) {
 				printf("(%.0lf%%)", pla.GetAvoidPer());
 			}
 			else {
@@ -998,7 +997,7 @@ int main(void)
 			bond = 1;
 		}
 		*/
-		ak = plaCommand;
+		plaSelectedCommand = plaCommand;
 		if (T.GetTurn() > 0) {
 //			SaveAI(plaCommandBef - 1, eneCommandBef);
 			APS.SaveAI();
@@ -1151,7 +1150,7 @@ int main(void)
 		}
 		/******************************************************************************************************************/
 		else if ((plaCommand == 3) && (eneCommand == 0)) {//âÒîÅ@í èÌ
-			if (randnum(100) < (pla.GetAvoidPer()) && !nsp) {
+			if (randnum(100) < (pla.GetAvoidPer()) && !plaCruciFlg) {
 				pla.Shield();
 				pla.Heal();
 				if (pla.GetDmg() < 0)pla.SetDmg(pla.GetDmg() / 2, D_EQUAL);
@@ -1170,7 +1169,7 @@ int main(void)
 		else if ((plaCommand == 3) && (eneCommand == 1)) {//âÒîÅ@ì¡éÍ
 			ent;
 			enttier;
-			if (randnum(100) < pla.GetAvoidPer() / 2 && !nsp) {
+			if (randnum(100) < pla.GetAvoidPer() / 2 && !plaCruciFlg) {
 				pla.Shield();
 				pla.Heal();
 				if (pla.GetDmg() < 0)pla.SetDmg(pla.GetDmg() / 3, D_EQUAL);
@@ -1299,7 +1298,7 @@ int main(void)
 				if (randnum(100) <= argePer) {
 					if ((data1[Mill] != 0) && (data1[Mill] != 4)) {
 						data1[Mill] = 4;
-						nsp = 1;
+						plaCruciFlg = 1;
 						illcnt = 2;
 						printf("çˆóêè«Ç™î≠è«ÇµÇΩÅB\n");
 					}
@@ -1347,19 +1346,19 @@ int main(void)
 			}
 			else if (data1[Mill] == 3) {
 				printf("évÇ§ÇÊÇ§Ç…ëÃÇ™ìÆÇ©Ç»Ç¢Åc\n");
-				nsp = 1;
+				plaCruciFlg = 1;
 				illcnt--;
 				if (illcnt <= 0) {
 					data1[Mill] = 0;
 					illcnt = 0;
-					nsp = 0;
+					plaCruciFlg = 0;
 					printf("âÛéÄè«Ç™äÆé°ÇµÇΩÅB\n");
 				}
 			}
 			else if (data1[Mill] == 4) {
 				randchar(36);
 				printf("\n");
-				nsp = 1;
+				plaCruciFlg = 1;
 				if ((pla.GetDmg() >= 0) && (ene.GetDmg() >= 0)) {
 					pla.SetDmg(pla.GetDmg() + ene.GetDmg(), D_EQUAL);
 					ene.SetDmg(0, D_EQUAL);
@@ -1377,7 +1376,7 @@ int main(void)
 				if (illcnt <= 0) {
 					data1[Mill] = 0;
 					illcnt = 0;
-					nsp = 0;
+					plaCruciFlg = 0;
 					printf("çˆóêè«Ç™äÆé°ÇµÇΩÅB\n");
 				}
 			}
