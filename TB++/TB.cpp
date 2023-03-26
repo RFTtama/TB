@@ -884,16 +884,16 @@ int main(void)
 		for (a = 1; a <= 10; a++) {
 			if (((pla.GetShieldNum() / (float)pla.GetMaxHP()) * 10.0 >= 11 - a) && (pla.GetShieldNum() > 0)) {
 				fccyan;
-				printf("”");
+				printf("„ª„ª");
 				SetColor();
 			}
 			else if (pla.GetHpPer() * 10.0 >= a) {
 				fcgreen;
-				printf("„ª");
+				printf("„ª„ª");
 			}
 			else {
 				fcclear;
-				printf("„ª");
+				printf("„ª„ª");
 			}
 		}
 		SetColor();
@@ -901,47 +901,55 @@ int main(void)
 		for (a = 1; a <= 10; a++) {
 			if (((ene.GetShieldNum() / (float)ene.GetMaxHP()) * 10.0 >= 11 - a) && (ene.GetShieldNum() > 0)) {
 				fccyan;
-				printf("”");
+				printf("„ª„ª");
 				SetColor();
 			}
 			else if (ene.GetHpPer() * 10.0 >= a) {
 				fcgreen;
-				printf("„ª");
+				printf("„ª„ª");
 			}
 			else {
 				fcclear;
-				printf("„ª");
+				printf("„ª„ª");
 			}
 		}
 		SetColor();
 		printf("\n");
 		printf("    SG:");
-		if (SGM.GerPer(Pla) >= 1.0)fcclear;
 		for (a = 1; a <= 10; a++) {
 			if ((SGM.GerPer(Pla) * 100) >= ((double)a * 10)) {
-				fccyan;
-				printf("„ª");
+				if (SGM.GerPer(Pla) >= 1.0) {
+					fcred
+				}
+				else {
+					fccyan;
+				}
+				printf("„ª„ª");
 			}
 			else {
 				fcclear;
-				printf("„ª");
+				printf("„ª„ª");
 			}
 		}
 		SetColor();
-		if (SGM.GerPer(Ene) >= 1.0)fcclear;
 		for (a = 0; a < strlen(charbox); a++) {
 			printf(" ");
 		}
 		printf("SG:");
 		for (a = 1; a <= 10; a++) {
 			if ((SGM.GerPer(Ene) * 100) >= ((double)a * 10)) {
-				fccyan;
-				printf("„ª");
+				if (SGM.GerPer(Ene) >= 1.0) {
+					fcred
+				}
+				else {
+					fccyan;
+				}
+				printf("„ª„ª");
 			}
 			else
 			{
 				fcclear;
-				printf("„ª");
+				printf("„ª„ª");
 			}
 		}
 		SetColor();
