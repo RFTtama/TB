@@ -888,10 +888,12 @@ int main(void)
 				SetColor();
 			}
 			else if (pla.GetHpPer() * 10.0 >= a) {
-				printf("¡");
+				fcgreen;
+				printf("„ª");
 			}
 			else {
-				printf(" ");
+				fcclear;
+				printf("„ª");
 			}
 		}
 		SetColor();
@@ -903,10 +905,12 @@ int main(void)
 				SetColor();
 			}
 			else if (ene.GetHpPer() * 10.0 >= a) {
-				printf("¡");
+				fcgreen;
+				printf("„ª");
 			}
 			else {
-				printf(" ");
+				fcclear;
+				printf("„ª");
 			}
 		}
 		SetColor();
@@ -914,8 +918,14 @@ int main(void)
 		printf("    SG:");
 		if (SGM.GerPer(Pla) >= 1.0)fcclear;
 		for (a = 1; a <= 10; a++) {
-			if ((SGM.GerPer(Pla) * 100) >= ((double)a * 10))printf("œ");
-			else printf("Z");
+			if ((SGM.GerPer(Pla) * 100) >= ((double)a * 10)) {
+				fccyan;
+				printf("„ª");
+			}
+			else {
+				fcclear;
+				printf("„ª");
+			}
 		}
 		SetColor();
 		if (SGM.GerPer(Ene) >= 1.0)fcclear;
@@ -924,8 +934,15 @@ int main(void)
 		}
 		printf("SG:");
 		for (a = 1; a <= 10; a++) {
-			if ((SGM.GerPer(Ene) * 100) >= ((double)a * 10))printf("œ");
-			else printf("Z");
+			if ((SGM.GerPer(Ene) * 100) >= ((double)a * 10)) {
+				fccyan;
+				printf("„ª");
+			}
+			else
+			{
+				fcclear;
+				printf("„ª");
+			}
 		}
 		SetColor();
 		printf("\n");
