@@ -132,12 +132,15 @@ public:
 				for (int i = 0; i < DECIDE_NUM; i++) {
 					for (int j = 1; j <= 10; j++) {
 						if (j <= ((APS.GetAIdecide(i) / (double)distributionFrequency) * 10.0)) {
-							printf("¡");
+							fcgreen;
+							printf("„ª„ª");
 						}
 						else {
-							printf(" ");
+							fcclear;
+							printf("„ª„ª");
 						}
 					}
+					fcclear;
 					if (i >= 20) {
 						printf("\t<-- %d\t%s  div%d", 1000 + 100 * i, rankName[i / 3 + 1], i % 3 + 1);
 					}
