@@ -14,7 +14,7 @@
 #define sk1cp if(pla.GetSkill(false) == 1 && spsk1 > 0)data1[Mskc]++;
 /**************/
 /*defines*/
-#define VERSION 123
+#define VERSION 130
 #define CNUM 25
 #define RANK_NUM 8
 #define cMaxn 0
