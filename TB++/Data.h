@@ -21,7 +21,7 @@ class Skills {
 private:
 	float skillStrength[2][E_SKILL_NUM] = {
 		{0, 4, 4, 4},
-		{0, 5, 4, 4, 5, 7, 7, 3, 7, 5, 7, 7 }
+		{0, 5, 4, 4, 5, 5, 7, 3, 7, 5, 7, 7 }
 	};
 public:
 	float GetSkillStrength(int identify, int skillIden) {
