@@ -1461,7 +1461,7 @@ int main(void)
 		if ((ene.GetSkill(false) == 10) && (ene.GetDmg() > 0))pain = pain + (int)(ene.GetDmg() * 0.1);
 		if (slowpain == 1)pla.SetDmg(pain, D_PLUS), printf("苦しみが%sを襲う!!\n", name);
 		if (slowpain == 2)slowpain = 1;
-		if ((ene.GetSkill(false) == 5) && (ene.GetDmg() > 50)) {
+		if ((ene.GetSkill(false) == 5) && (ene.GetDmg() > 50) && (ene.GetShieldNum() > 0)) {
 			printf("敵のスキルによりダメージが吸収された!!\n");
 			ene.SetDmg(50, D_EQUAL);
 			data2[Ecnt]++;
