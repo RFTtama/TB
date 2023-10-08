@@ -518,7 +518,27 @@ int main(void)
 	}
 	calLV(data1[Mxp], &data1[MLV]);
 	printf("_/_/_/_/_/_/_/_/_/_/_/_/_/\n");
-	printf("%sのプロフィール\n", name);
+	if (s_rate < 1) {
+		fcclear;
+	}
+	else if (s_rate < 2) {
+		fccyan;
+	}
+	else if (s_rate < 6) {
+		fcblue;
+	}
+	else if (s_rate < 21) {
+		fcgreen;
+	}
+	else if (s_rate < 51) {
+		fcyellow;
+	}
+	else {
+		fcred;
+	}
+	printf("%s", name);
+	fcclear;
+	printf("のプロフィール\n");
 	printf("HP:%d  AT:%d  LV:%d\n", pla.GetHP(), pla.GetAT(), data1[MLV]);
 	printf("_/_/_/_/_/_/_/_/_/_/_/_/_/\n");
 	startWait();
