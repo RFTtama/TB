@@ -1656,14 +1656,19 @@ int main(void)
 					timer(50);
 					if (DM.GetTrueDomi() < DM.GetE(1)) {
 						if (DM.GetPerc(0) * 10.0 >= (float)a) {
-							printf("¡");
+							fcgreen;
+							printf("„ª„ª");
+							fcclear;
 						}
 						else {
-							printf(" ");
+							fcclear;
+							printf("„ª„ª");
 						}
 					}
 					else {
-						printf("¡");
+						fcgreen;
+						printf("„ª„ª");
+						fcclear;
 					}
 				}
 				printf("%dpts/%dpts", (int)DM.GetTrueDomi(), DM.GetE(1));
@@ -1671,10 +1676,13 @@ int main(void)
 				for (a = 1; a <= 10; a++) {
 					timer(50);
 					if (DM.GetPerc(1) * 10 >= (float)a) {
-						printf("¡");
+						fcgreen;
+						printf("„ª„ª");
+						fcclear;
 					}
 					else {
-						printf(" ");
+						fcclear;
+						printf("„ª„ª");
 					}
 				}
 				printf("%dpts/%dpts", (int)DM.GetTena(), DM.GetE(2));
@@ -1682,10 +1690,13 @@ int main(void)
 				for (a = 1; a <= 10; a++) {
 					timer(50);
 					if (DM.GetPerc(2) * 10 >= (float)a) {
-						printf("¡");
+						fcgreen;
+						printf("„ª„ª");
+						fcclear;
 					}
 					else {
-						printf(" ");
+						fcclear;
+						printf("„ª„ª");
 					}
 				}
 				printf("%dpts/%dpts\n", DM.GetPerf(), DM.GetE(3));
