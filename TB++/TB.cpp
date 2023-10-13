@@ -561,7 +561,7 @@ int main(void)
 //		SG[1][0] = 4;
 		SGM.SetMaxSG(5, Ene);
 	}
-	else if ((randnum(20) == 0) && ((tm.tm_hour >= 21) && (tm.tm_hour <= 4))) {
+	else if ((randnum(200) == 0) && ((tm.tm_hour >= 21) && (tm.tm_hour <= 4))) {
 		randchar(24);
 		printf("\a\n");
 		ene.SetHP(2000, D_EQUAL);
