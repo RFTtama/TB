@@ -139,7 +139,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ItemDatas.cpp" />
     <ClCompile Include="TB.cpp" />
   </ItemGroup>
   <ItemGroup>
