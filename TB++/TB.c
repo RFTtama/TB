@@ -19,6 +19,9 @@
 #include"TBfunc.h"
 #include"shop.h"
 
+/* 整備済みINCLUDE	*/
+#include "TurnManager.h"
+
 /*****************/
 int main(void)
 {
@@ -58,6 +61,10 @@ int main(void)
 	int decideData[DECIDE_NUM];
 	int oldLvl;
 	int argePer = ARGE;
+
+	/* クラス関連							*/
+	TurnManager* TM = TurnManagerConstructor();
+
 	/********************/
 	/* file pointer */
 	/********************/
@@ -883,7 +890,7 @@ int main(void)
 		}
 		printf("\n");
 		//		if (end == 1)printf("<バグ発生>\n");
-		printf("ターン:%d\n", T.GetTurn());
+		printf("ターン:%d\n", TM->GetTurn());
 		printf("_/_/_/_/_/%sのステータス HP:%d[%d](%.1lf%%) AT:%d", name, pla.GetHP(), pla.GetShieldNum(), (double)pla.GetHpPer() * 100.0, pla.GetAT());
 		if (pla.GetPlusAT() > 0) {
 			fcred;
@@ -993,7 +1000,7 @@ int main(void)
 		SetColor();
 		printf("\n");
 		/* 行動選択 */
-		if (T.GetTurn() > 0 && stgProgress > 0) {
+		if (TM->GetTurn() > 0 && stgProgress > 0) {
 //			eneCommand = AIpat(plaCommandBef - 1, eneCommandBef);
 			eneCommand = APS.AIpat();
 		}
@@ -1061,7 +1068,7 @@ int main(void)
 		}
 		*/
 		plaSelectedCommand = plaCommand;
-		if (T.GetTurn() > 0) {
+		if (TM->GetTurn() > 0) {
 //			SaveAI(plaCommandBef - 1, eneCommandBef);
 			APS.SaveAI();
 		}
@@ -1286,10 +1293,10 @@ int main(void)
 			printf("お互いに睨みあっている\n");
 		}
 		/******************************************************************************************************************/
-		if ((T.TurnRemains()) <= 5 && (T.TurnRemains() >= 0)) {
-			printf("\n\aセットまであと%dターン\n\n", T.TurnRemains());
+		if ((TM->GetTurnRemains()) <= 5 && (TM->GetTurnRemains() >= 0)) {
+			printf("\n\aセットまであと%dターン\n\n", TM->GetTurnRemains());
 		}
-		if (T.TurnRemains() == 0) {
+		if (TM->GetTurnRemains() == 0) {
 			printf("\nセット!!\n");
 			set_flg = true;
 		}
@@ -1459,7 +1466,7 @@ int main(void)
 		}
 		pla.Revenge();
 		ene.Revenge();
-		/*if (end != 1)*/T.PlusTurn();//ターン増加
+		/*if (end != 1)*/TM->TurnPlus();//ターン増加
 //		if (end == 1)turn--;//ターン減少
 		if (pla.GetDmg() > 0) {
 			DM.SetData(2);

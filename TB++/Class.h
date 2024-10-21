@@ -1,43 +1,4 @@
 #pragma once
-#define G1 700
-#define G2 90
-#define G3 250
-#define MAX_TURN 80
-
-class TurnMan
-{
-private:
-	int turn;
-	int setturn;
-	
-public:
-	void PlusTurn()
-	{
-		this->turn++;
-	}
-	
-	int GetTurn()
-	{
-		return this->turn;
-	}
-	
-	int GetSetTurn()
-	{
-		return this->setturn;
-	}
-	
-	int TurnRemains()
-	{
-		return this->setturn - this->turn;
-	}
-
-	TurnMan() {
-		this->turn = 0;
-		this->setturn = MAX_TURN;
-	}
-};
-
-TurnMan T;
 
 class EnemyManage
 {
