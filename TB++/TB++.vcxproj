@@ -139,7 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="TB.cpp" />
+    <ClCompile Include="TB.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h" />

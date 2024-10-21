@@ -40,11 +40,11 @@ int main(void)
 	char spsk1 = 0;
 	unsigned char deadflag = 0;
 	unsigned char Mres[3] = { 1, 0, 1 };
-	bool rageflg[2] = { false, false };
+	unsigned char rageflg[2] = { 0, 0 };
 	unsigned char nofi = 0;//number of item
 	int pain = 0;
 	//	unsigned char end = 0;
-	bool set_flg = false;
+	unsigned char set_flg = 0;
 	char wl = 0;
 	unsigned _int64 unlockingdata[2] = { 0, 0 };
 	clock_t safetime, starttime;
