@@ -139,8 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ItemDatas.cpp" />
-    <ClCompile Include="TB.cpp" />
+    <ClCompile Include="TB.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h" />
@@ -154,7 +153,6 @@
     <ClInclude Include="TBdefine.h" />
     <ClInclude Include="TBfunc.h" />
     <ClInclude Include="TBglobal.h" />
-    <ClInclude Include="TBinclude.h" />
     <ClInclude Include="GeneralFunctions.h" />
     <ClInclude Include="Text.h" />
   </ItemGroup>
