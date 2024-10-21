@@ -1,38 +1,5 @@
 #pragma once
 
-class EnemyManage
-{
-private:
-	int EnemyIden;
-	char entityname[3][11][ENAMES] = { "ゾンビ", "狂犬", "ゴースト", "裏切者", "記憶の模倣", "悪夢", "邪神", "邪神Ⅱ", "霞んだ記憶", "確認不能", "闇の猟犬",/*stage 0*/
-		"フロート", "ナル", "実験体Ⅰ","あの世の使者", "アルジオロジー", "ボイド","フィニート" ,"エル", "霞んだ記憶", "確認不能", "闇の猟犬",/*stage 1*/
-		"偽りの希望", "", "", "", "", "", "", "", "霞んだ記憶", "確認不能", "闇の猟犬",/*stage 2*/
-	};
-public:
-	int GetEi();
-	void SetEI(int);
-	void GetEn(int, char[ENAMES]);
-};
-
-int EnemyManage::GetEi()
-{
-	return this->EnemyIden;
-}
-
-void EnemyManage::SetEI(int Iden) {
-	this->EnemyIden = Iden;
-}
-
-void EnemyManage::GetEn(int tag, char charbox[ENAMES]) {
-	int i;
-	for (i = 0; entityname[tag][this->EnemyIden][i] != '\0'; i++) {
-		charbox[i] = entityname[tag][this->EnemyIden][i];
-	}
-	charbox[i] = '\0';
-}
-
-EnemyManage EM;
-
 #define All 0
 #define Pla 1
 #define Ene 2
