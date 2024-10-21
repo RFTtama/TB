@@ -154,7 +154,6 @@
     <ClInclude Include="TBdefine.h" />
     <ClInclude Include="TBfunc.h" />
     <ClInclude Include="TBglobal.h" />
-    <ClInclude Include="TBinclude.h" />
     <ClInclude Include="GeneralFunctions.h" />
     <ClInclude Include="Text.h" />
   </ItemGroup>
