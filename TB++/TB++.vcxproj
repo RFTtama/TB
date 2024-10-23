@@ -149,7 +149,6 @@
     <ClInclude Include="Data.h" />
     <ClInclude Include="Class.h" />
     <ClInclude Include="EnemyDefine.h" />
-    <ClInclude Include="ItemClass.h" />
     <ClInclude Include="MT.h" />
     <ClInclude Include="prototype.h" />
     <ClInclude Include="shop.h" />
