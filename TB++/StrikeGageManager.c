@@ -5,7 +5,6 @@ static void ClearNowSG(int);
 static void SetMaxSG(short, int);
 static short GetMaxSG(int);
 static void MinusMaxSG(int);
-static void PlusMaxSG(int);
 static void PlusNowSG(short, int);
 static short GetNowSG(int);
 static double GetPercentage(int);
@@ -99,30 +98,6 @@ static void MinusMaxSG(int tag)
 	default:
 		break;
 	}
-}
-
-/* ç≈ëÂSGÇë´Ç∑										*/
-static void PlusMaxSG(int tag)
-{
-	switch (tag) {
-	case SGM_ALL:
-		maxSG[0]--;
-		maxSG[1]--;
-		break;
-
-	case SGM_PLA:
-		maxSG[0]--;
-		break;
-
-	case SGM_ENE:
-		maxSG[1]--;
-		break;
-
-	default:
-		break;
-	}
-	if (maxSG[0] <= 0)maxSG[0] = 1;
-	if (maxSG[1] <= 0)maxSG[1] = 1;
 }
 
 /* éwíËÇ≥ÇÍÇΩêîílï™ÇæÇØåªç›ÇÃSGÇë´Ç∑				*/
