@@ -22,6 +22,7 @@
 /* 整備済みINCLUDE	*/
 #include "TurnManager.h"
 #include "EnemyDefine.h"
+#include "StrikeGageManager.h"
 
 /*****************/
 int main(void)
@@ -66,6 +67,7 @@ int main(void)
 	/* クラス関連							*/
 	TurnManager* TM = TurnManagerConstructor();
 	EnemyDefine* ED = EnemyDefineConstructor();
+	StrikeGageManager* SGM = StrikeGageConstructor();
 
 	/********************/
 	/* file pointer */
@@ -501,7 +503,7 @@ int main(void)
 		fcwhite;
 		printf("ダメージを与え、自分の能力が弱体化する。\nこの能力は1回の対戦で1回使え、攻撃を命中させる度に威力が上昇する。\n");
 //		SG[0][0] = 10;
-		SGM.SetMaxSG(10, Pla);
+		SGM->SetMaxSG(10, SGM_PLA);
 		break;
 	case 2:
 		fccyan;
@@ -514,7 +516,7 @@ int main(void)
 		fcwhite;
 		printf("ダメージを与え能力を弱体化するスキルを発動する。命中率はスキル発動に失敗する度に%d%%上昇する。\nこの能力発動時に命中率はリセットされる。\n", MAZOKU_SKILL);
 //		SG[0][0] = 10;
-		SGM.SetMaxSG(10, Pla);
+		SGM->SetMaxSG(10, SGM_PLA);
 		break;
 	case 3:
 		fccyan;
@@ -527,14 +529,14 @@ int main(void)
 		fcwhite;
 		printf("増加する。\n");
 //		SG[0][0] = 10;
-		SGM.SetMaxSG(10, Pla);
+		SGM->SetMaxSG(10, SGM_PLA);
 		break;
 	default:
 		break;
 	};
 	fcclear;
 //	if (nofi == 7)SG[0][0]--;
-	if (nofi == 7)SGM.SetMaxSG(SGM.GetMaxSG(Pla) - 1, Pla);
+	if (nofi == 7)SGM->SetMaxSG(SGM->GetMaxSG(SGM_PLA) - 1, SGM_PLA);
 	printf("\n");
 	liker();
 
@@ -586,7 +588,7 @@ int main(void)
 		ED->SetEnemyId(9);
 		pla.SetCritper(850, D_PLUS);
 //		SG[1][0] = 4;
-		SGM.SetMaxSG(5, Ene);
+		SGM->SetMaxSG(5, SGM_ENE);
 	}
 	else if ((randnum(200) == 0) && ((tm.tm_hour >= 21) && (tm.tm_hour <= 4))) {
 		randchar(24);
@@ -596,9 +598,9 @@ int main(void)
 		ene.SetShield(true);
 		rageHP[1][0] = 2000;
 		ene.SetSkill(10);
-		ED->SetEnemyId(10)
+		ED->SetEnemyId(10);
 //		SG[1][0] = 4;
-		SGM.SetMaxSG(4, Ene);
+		SGM->SetMaxSG(4, SGM_ENE);
 	}
 	else if (randnum(strongBossSpawnChance) == 0) {//霞んだ記憶
 		printf("\a_/_/BOSS_/_/\n");
@@ -609,7 +611,7 @@ int main(void)
 		ED->SetEnemyId(8);
 		ene.SetCritper(150, D_PLUS);
 //		SG[1][0] = 16;
-		SGM.SetMaxSG(16, Ene);
+		SGM->SetMaxSG(16, SGM_ENE);
 	}
 	else {
 		for (a = 0, b = 0; a < enemyVariety; a++) {
@@ -634,7 +636,7 @@ int main(void)
 				ene.SetAT(50, D_EQUAL);
 //				SG[1][0] = 11;
 				if (stgProgress >= 1)ene.SetSkill(3);
-				SGM.SetMaxSG(11, Ene);
+				SGM->SetMaxSG(11, SGM_ENE);
 				break;
 
 			case 1://狂犬
@@ -642,7 +644,7 @@ int main(void)
 				ene.SetAT(60, D_EQUAL);
 //				SG[1][0] = 13;
 				if (stgProgress >= 1)ene.SetSkill(3);
-				SGM.SetMaxSG(13, Ene);
+				SGM->SetMaxSG(13, SGM_ENE);
 				break;
 
 			case 2://ゴースト
@@ -652,7 +654,7 @@ int main(void)
 				rageHP[1][0] = ene.GetHP() + ene.GetShieldNum();
 				if (stgProgress >= 2)ene.SetSkill(7);
 //				SG[1][0] = 12;
-				SGM.SetMaxSG(12, Ene);
+				SGM->SetMaxSG(12, SGM_ENE);
 				break;
 
 			case 3://裏切者
@@ -660,7 +662,7 @@ int main(void)
 				ene.SetAT(50, D_EQUAL);
 				if (stgProgress >= 3)ene.SetSkill(1);
 //				SG[1][0] = 11;
-				SGM.SetMaxSG(11, Ene);
+				SGM->SetMaxSG(11, SGM_ENE);
 				break;
 
 			case 4://記憶の模倣
@@ -668,7 +670,7 @@ int main(void)
 				ene.SetAT(pla.GetAT(), D_EQUAL);
 				ene.SetSkill(randnum(2) + 1);
 //				SG[1][0] = 10;
-				SGM.SetMaxSG(10, Ene);
+				SGM->SetMaxSG(10, SGM_ENE);
 				break;
 
 			case 5://悪夢
@@ -677,7 +679,7 @@ int main(void)
 				ene.SetPlusAT(2, D_EQUAL);
 				if (stgProgress >= 5)ene.SetSkill(3);
 //				SG[1][0] = 12;
-				SGM.SetMaxSG(12, Ene);
+				SGM->SetMaxSG(12, SGM_ENE);
 				break;
 
 			case 6://邪神
@@ -685,7 +687,7 @@ int main(void)
 				ene.SetHP(1400, D_EQUAL);
 				ene.SetAT(90, D_EQUAL);
 //				SG[1][0] = 13;
-				SGM.SetMaxSG(13, Ene);
+				SGM->SetMaxSG(13, SGM_ENE);
 				break;
 
 			case 7://邪神Ⅱ
@@ -694,7 +696,7 @@ int main(void)
 				ene.SetAT(90, D_EQUAL);
 				ene.SetSkill(1);
 //				SG[1][0] = 15;
-				SGM.SetMaxSG(15, Ene);
+				SGM->SetMaxSG(15, SGM_ENE);
 				break;
 			}
 			break;
@@ -707,35 +709,35 @@ int main(void)
 				ene.SetShieldNum(pla.GetHP() / 2 + pla.GetHP() % 2, D_EQUAL);
 				rageHP[1][0] = ene.GetHP() * 2;
 //				SG[1][0] = 12;
-				SGM.SetMaxSG(12, Ene);
+				SGM->SetMaxSG(12, SGM_ENE);
 				break;
 			case 1://ナル
 				ene.SetHP(1200, D_EQUAL);
 				ene.SetAT(70, D_EQUAL);
 				ene.SetSkill(2);
 //				SG[1][0] = 9;
-				SGM.SetMaxSG(9, Ene);
+				SGM->SetMaxSG(9, SGM_ENE);
 				break;
 			case 2://実験体Ⅰ
 				ene.SetHP(1000, D_EQUAL);
 				ene.SetAT(90, D_EQUAL);
 				ene.SetSkill(1);
 //				SG[1][0] = 20;
-				SGM.SetMaxSG(20, Ene);
+				SGM->SetMaxSG(20, SGM_ENE);
 				break;
 			case 3://あの世の使者
 				ene.SetHP(1300, D_EQUAL);
 				ene.SetAT(80, D_EQUAL);
 				ene.SetSkill(3);
 //				SG[1][0] = 13;
-				SGM.SetMaxSG(13, Ene);
+				SGM->SetMaxSG(13, SGM_ENE);
 				break;
 			case 4://アルジオロジー
 				ene.SetHP(1600, D_EQUAL);
 				ene.SetAT(60, D_EQUAL);
 				ene.SetSkill(8);
 //				SG[1][0] = 16;
-				SGM.SetMaxSG(16, Ene);
+				SGM->SetMaxSG(16, SGM_ENE);
 				break;
 			case 5://ボイド
 				ene.SetHP(1000, D_EQUAL);
@@ -743,7 +745,7 @@ int main(void)
 				ene.SetShieldNum(1200, D_EQUAL);
 				ene.SetSkill(4);
 //				SG[1][0] = 20;
-				SGM.SetMaxSG(20, Ene);
+				SGM->SetMaxSG(20, SGM_ENE);
 				break;
 			case 6://フィニート
 				printf("\a_/_/Boss_/_/");
@@ -751,7 +753,7 @@ int main(void)
 				ene.SetAT(100, D_EQUAL);
 				ene.SetSkill(2);
 //				SG[1][0] = 17;
-				SGM.SetMaxSG(17, Ene);
+				SGM->SetMaxSG(17, SGM_ENE);
 				break;
 			case 7://エル
 				printf("\a_/_/Boss_/_/");
@@ -759,7 +761,7 @@ int main(void)
 				ene.SetAT(10, D_EQUAL);
 				ene.SetSkill(7);
 //				SG[1][0] = 20;
-				SGM.SetMaxSG(20, Ene);
+				SGM->SetMaxSG(20, SGM_ENE);
 				break;
 			}
 			break;
@@ -774,7 +776,7 @@ int main(void)
 				data2[Ecnt] = 1;
 				data2[Ecnt2] = 1;
 //				SG[1][0] = 15;
-				SGM.SetMaxSG(15, Ene);
+				SGM->SetMaxSG(15, SGM_ENE);
 				break;
 			}
 			break;
@@ -964,8 +966,8 @@ int main(void)
 		printf("\n");
 		printf("    SG:");
 		for (a = 1; a <= 10; a++) {
-			if ((SGM.GerPer(Pla) * 100) >= ((double)a * 10)) {
-				if (SGM.GerPer(Pla) >= 1.0) {
+			if ((SGM->GetPercentage(SGM_PLA) * 100) >= ((double)a * 10)) {
+				if (SGM->GetPercentage(SGM_PLA) >= 1.0) {
 					fcred
 				}
 				else {
@@ -984,8 +986,8 @@ int main(void)
 		}
 		printf("SG:");
 		for (a = 1; a <= 10; a++) {
-			if ((SGM.GerPer(Ene) * 100) >= ((double)a * 10)) {
-				if (SGM.GerPer(Ene) >= 1.0) {
+			if ((SGM->GetPercentage(SGM_ENE) * 100) >= ((double)a * 10)) {
+				if (SGM->GetPercentage(SGM_ENE) >= 1.0) {
 					fcred
 				}
 				else {
@@ -1013,7 +1015,7 @@ int main(void)
 		}
 		do {
 			printf("行動選択\n通常攻撃");
-			if (!SGM.GetSf(Pla)) {
+			if (!SGM->GetPercentage(SGM_PLA)) {
 				printf("(%.0lf)", pla.CalcAT() * NOMAL_MAGN * (ene.GetDmgPer() / 100.0));
 			}
 			else {
@@ -1022,7 +1024,7 @@ int main(void)
 				SetColor();
 			}
 			printf(" :1 特殊攻撃");
-			if (!SGM.GetSf(Pla)) {
+			if (!SGM->GetStrikeFlg(SGM_PLA)) {
 				printf("(%.0lf)", pla.CalcAT() * SPECL_MAGN * (ene.GetDmgPer() / 100.0));
 			}
 			else {
@@ -1483,27 +1485,27 @@ int main(void)
 		if (ene.GetDmg() > 0) {
 			rageHP[1][1] = rageHP[1][1] + ene.GetDmg();
 		}
-		if ((SGM.GetSf(Ene)) && ((eneCommandBef == 0) || (eneCommandBef == 1)) && (pla.GetDmg() > 0)) {
+		if ((SGM->ClearStrikeFlg(SGM_ENE)) && ((eneCommandBef == 0) || (eneCommandBef == 1)) && (pla.GetDmg() > 0)) {
 			fcred;
 			printf("\a%sは怯んだ!!\n", name);
 			SetColor();
 			pla.Crit();
-			SGM.ClearSF(Ene);
+			SGM->ClearStrikeFlg(SGM_ENE);
 		}
-		else if ((SGM.GetSf(Ene)) && ((eneCommandBef == 0) || (eneCommandBef == 1))) {
-			SGM.ClearSF(Ene);
+		else if ((SGM->GetStrikeFlg(SGM_ENE)) && ((eneCommandBef == 0) || (eneCommandBef == 1))) {
+			SGM->ClearStrikeFlg(SGM_ENE);
 		}
-		if ((SGM.GetSf(Pla)) && ((plaCommandBef == 1) || (plaCommandBef == 2)) && (ene.GetDmg() > 0)) {
+		if ((SGM->GetStrikeFlg(SGM_PLA)) && ((plaCommandBef == 1) || (plaCommandBef == 2)) && (ene.GetDmg() > 0)) {
 			fcred;
 			printf("\a%sは怯んだ!!\n", charbox);
 			SetColor();
 			ene.Crit();
 			Perform(5);
 			pain = 0;
-			SGM.ClearSF(Pla);
+			SGM->ClearStrikeFlg(SGM_PLA);
 		}
-		else if ((SGM.GetSf(Pla)) && ((plaCommandBef == 1) || (plaCommandBef == 2))) {
-			SGM.ClearSF(Pla);
+		else if ((SGM->GetStrikeFlg(SGM_PLA)) && ((plaCommandBef == 1) || (plaCommandBef == 2))) {
+			SGM->ClearStrikeFlg(SGM_PLA);
 		}
 		if ((ene.GetSkill(false) == 10) && (ene.GetDmg() > 0))pain = pain + (int)(ene.GetDmg() * 0.1);
 		if (slowpain == 1)pla.SetDmg(pain, D_PLUS), printf("苦しみが%sを襲う!!\n", name);
@@ -1618,8 +1620,8 @@ int main(void)
 				}*/
 		pla.PlusAvoidCnt();
 		ene.PlusAvoidCnt();
-		SGM.PlusNowSG(1, Pla);
-		SGM.PlusNowSG(1, Ene);
+		SGM->PlusNowSG(1, SGM_PLA);
+		SGM->PlusNowSG(1, SGM_ENE);
 		timer(450);
 		/********************************************************************/
 		/********************************************************************/
