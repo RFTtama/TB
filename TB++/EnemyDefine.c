@@ -1,5 +1,10 @@
 #include "EnemyDefine.h"
 
+/* プロトタイプ宣言			*/
+static int GetEnemyId(void);
+static void SetEnemyId(int);
+static void GetEnemyName(int, EnemyInfo*);
+
 /* 変数関連					*/
 static int enemyId = 0;
 
@@ -23,13 +28,13 @@ static void SetEnemyId(int id)
 }
 
 /* 敵キャラの名前を設定する	*/
-static void GetEnemyName(int stage, char enemyName[ENAMES])
+static void GetEnemyName(int stage, EnemyInfo* info)
 {
 	int i;
 	for (i = 0; entityname[stage][enemyId][i] != '\0'; i++) {
-		enemyName[i] = entityname[stage][enemyId][i];
+		info->EnemyName[i] = entityname[stage][enemyId][i];
 	}
-	enemyName[i] = '\0';
+	info->EnemyName[i] = '\0';
 }
 
 /* インスタンス				*/

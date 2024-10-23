@@ -1,5 +1,16 @@
 #include "StrikeGageManager.h"
 
+/* プロトタイプ宣言									*/
+static void ClearNowSG(int);
+static void SetMaxSG(short, int);
+static short GetMaxSG(int);
+static void MinusMaxSG(int);
+static void PlusNowSG(short, int);
+static short GetNowSG(int);
+static double GetPercentage(int);
+static unsigned char GetStrikeFlg(int);
+static void ClearStrikeFlg(int);
+
 /* 変数関連											*/
 static short maxSG[2] = { -1, -1 };
 static short nowSG[2] = { -1, -1 };
@@ -34,6 +45,7 @@ static void SetMaxSG(short value, int tag)
 	case SGM_ALL:
 		maxSG[0] = value;
 		maxSG[1] = value;
+		//ここの部分が外部参照なので、変更する必要あり
 		pla.SetCritper(100 + value * 5, D_EQUAL);
 		ene.SetCritper(100 + value * 5, D_EQUAL);
 		break;
@@ -86,30 +98,6 @@ static void MinusMaxSG(int tag)
 	default:
 		break;
 	}
-}
-
-/* 最大SGを足す										*/
-static void PlusMaxSG(int tag)
-{
-	switch (tag) {
-	case SGM_ALL:
-		maxSG[0]--;
-		maxSG[1]--;
-		break;
-
-	case SGM_PLA:
-		maxSG[0]--;
-		break;
-
-	case SGM_ENE:
-		maxSG[1]--;
-		break;
-
-	default:
-		break;
-	}
-	if (maxSG[0] <= 0)maxSG[0] = 1;
-	if (maxSG[1] <= 0)maxSG[1] = 1;
 }
 
 /* 指定された数値分だけ現在のSGを足す				*/
@@ -207,4 +195,24 @@ static void ClearStrikeFlg(int tag)
 	default:
 		break;
 	}
+}
+
+/* インスタンス										*/
+static StrikeGageManager SGM =
+{
+	ClearNowSG,
+	SetMaxSG,
+	GetMaxSG,
+	MinusMaxSG,
+	PlusNowSG,
+	GetNowSG,
+	GetPercentage,
+	GetStrikeFlg,
+	ClearStrikeFlg
+};
+
+/* コンストラクタ									*/
+static StrikeGageManager* StrikeGageConstructor(void)
+{
+	return &SGM;
 }

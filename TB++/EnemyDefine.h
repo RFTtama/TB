@@ -1,7 +1,7 @@
 #pragma once
 #define ENAMES 25
 
-/* クラスのひな型	*/
+/* クラスのひな型		*/
 typedef struct
 {
 	int (*GetEnemyId)(void);
@@ -9,5 +9,11 @@ typedef struct
 	void (*SetEnemyName)(int, char[ENAMES]);
 }EnemyDefine;
 
-/* コンストラクタ	*/
+/* 敵情報保存用構造体	*/
+typedef struct
+{
+	char EnemyName[ENAMES];
+}EnemyInfo;
+
+/* コンストラクタ		*/
 static EnemyDefine* EnemyDefineConstructor(void);
