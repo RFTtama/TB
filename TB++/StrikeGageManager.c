@@ -196,3 +196,23 @@ static void ClearStrikeFlg(int tag)
 		break;
 	}
 }
+
+/* インスタンス										*/
+static StrikeGageManager SGM =
+{
+	ClearNowSG,
+	SetMaxSG,
+	GetMaxSG,
+	MinusMaxSG,
+	PlusNowSG,
+	GetNowSG,
+	GetPercentage,
+	GetStrikeFlg,
+	ClearStrikeFlg
+};
+
+/* コンストラクタ									*/
+static StrikeGageManager* StrikeGageConstructor(void)
+{
+	return &SGM;
+}
