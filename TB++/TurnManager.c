@@ -1,5 +1,11 @@
 #include "TurnManager.h"
 
+/* プロトタイプ宣言					*/
+static void TurnPlus(void);
+static int GetTurn(void);
+static int GetSetTurn(void);
+static int GetTurnRemains(void);
+
 /* 変数関連							*/
 static int turn		= 0;
 static int setTurn	= 0;
