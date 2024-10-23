@@ -1,5 +1,27 @@
 /*start of FILEs*/
-#include"TBinclude.h"
+#include<windows.h>
+#include<errno.h>
+#include<stdio.h>
+#include<time.h>
+#include<stdlib.h>
+#include<string.h>
+#include<ctype.h>
+#include<math.h>
+#include"TBdefine.h"
+#include"prototype.h"
+#include"Text.h"
+#include"GeneralFunctions.h"
+#include"TBglobal.h"
+#include"Data.h"
+#include"Class.h"
+#include"TBAI.h"
+#include"Config.h"
+#include"TBfunc.h"
+#include"shop.h"
+
+/* 整備済みINCLUDE	*/
+#include "TurnManager.h"
+#include "EnemyDefine.h"
 
 /*****************/
 int main(void)
@@ -22,11 +44,11 @@ int main(void)
 	char spsk1 = 0;
 	unsigned char deadflag = 0;
 	unsigned char Mres[3] = { 1, 0, 1 };
-	bool rageflg[2] = { false, false };
+	unsigned char rageflg[2] = { 0, 0 };
 	unsigned char nofi = 0;//number of item
 	int pain = 0;
 	//	unsigned char end = 0;
-	bool set_flg = false;
+	unsigned char set_flg = 0;
 	char wl = 0;
 	unsigned _int64 unlockingdata[2] = { 0, 0 };
 	clock_t safetime, starttime;
@@ -40,6 +62,11 @@ int main(void)
 	int decideData[DECIDE_NUM];
 	int oldLvl;
 	int argePer = ARGE;
+
+	/* クラス関連							*/
+	TurnManager* TM = TurnManagerConstructor();
+	EnemyDefine* ED = EnemyDefineConstructor();
+
 	/********************/
 	/* file pointer */
 	/********************/
@@ -556,7 +583,7 @@ int main(void)
 		ene.SetSkill(6);
 		ene.SetDmgPer(0, D_EQUAL);
 		ene.SetCritper(0, D_EQUAL);
-		EM.SetEI(9);
+		ED->SetEnemyId(9);
 		pla.SetCritper(850, D_PLUS);
 //		SG[1][0] = 4;
 		SGM.SetMaxSG(5, Ene);
@@ -569,7 +596,7 @@ int main(void)
 		ene.SetShield(true);
 		rageHP[1][0] = 2000;
 		ene.SetSkill(10);
-		EM.SetEI(10);
+		ED->SetEnemyId(10)
 //		SG[1][0] = 4;
 		SGM.SetMaxSG(4, Ene);
 	}
@@ -579,7 +606,7 @@ int main(void)
 		ene.SetAT(1, D_EQUAL);
 		ene.SetShieldNum(10000, D_EQUAL);
 		rageHP[1][0] = 2000;
-		EM.SetEI(8);
+		ED->SetEnemyId(8);
 		ene.SetCritper(150, D_PLUS);
 //		SG[1][0] = 16;
 		SGM.SetMaxSG(16, Ene);
@@ -752,9 +779,9 @@ int main(void)
 			}
 			break;
 		}
-		EM.SetEI(enemyVariety);
+		ED->SetEnemyId(enemyVariety);
 	}
-	EM.GetEn(eneNameTag, charbox);
+	ED->SetEnemyName(eneNameTag, charbox);
 	timer(100);
 	pla.SetDmgBoost(true);
 	pla.SetShield(true);
@@ -803,10 +830,10 @@ int main(void)
 	if (nofi == 1)addition[10] -= 10;
 	if (nofi == 3)addition[6] += 20;
 	if (nofi == 9)addition[8] += 10;
-	if ((stage == 0) && (EM.GetEi() == 7)) {
+	if ((stage == 0) && (ED->GetEnemyId() == 7)) {
 		addition[7] = -50;
 	}
-	if (EM.GetEi() == 9) {
+	if (ED->GetEnemyId() == 9) {
 		addition[7] = -100;
 	}
 		datalimit(0);
@@ -825,7 +852,7 @@ int main(void)
 		else*/
 		SetColor();
 		/* 霞んだ記憶処理 */
-		if ((EM.GetEi() == 8) && (data2[Etier] != strongBossTier)) {
+		if ((ED->GetEnemyId() == 8) && (data2[Etier] != strongBossTier)) {
 			fcyellow;
 			if (data2[Etier] == 1) {//ティア2
 				ene.SetHP(1000, D_EQUAL);
@@ -849,7 +876,7 @@ int main(void)
 			strongBossTier = data2[Etier];
 			SetColor();
 		}
-		if ((data2[Etier] >= 5) && (EM.GetEi() == 8)) {
+		if ((data2[Etier] >= 5) && (ED->GetEnemyId() == 8)) {
 			data2[Etier] = 5;
 			ene.SetHP(10, D_PLUS);
 			ene.AppHPlimit();
@@ -865,7 +892,7 @@ int main(void)
 		}
 		printf("\n");
 		//		if (end == 1)printf("<バグ発生>\n");
-		printf("ターン:%d\n", T.GetTurn());
+		printf("ターン:%d\n", TM->GetTurn());
 		printf("_/_/_/_/_/%sのステータス HP:%d[%d](%.1lf%%) AT:%d", name, pla.GetHP(), pla.GetShieldNum(), (double)pla.GetHpPer() * 100.0, pla.GetAT());
 		if (pla.GetPlusAT() > 0) {
 			fcred;
@@ -885,7 +912,7 @@ int main(void)
 		if (ene.GetDmgBoost())printf(" [△]");
 		if (ene.GetShield())printf(" [□]");
 		if (ene.GetRevenge())printf(" [▽]");
-		if (EM.GetEi() == 8) {
+		if (ED->GetEnemyId() == 8) {
 			if (data2[Etier] >= 5) {
 				printf(" Tier:5");
 			}
@@ -975,7 +1002,7 @@ int main(void)
 		SetColor();
 		printf("\n");
 		/* 行動選択 */
-		if (T.GetTurn() > 0 && stgProgress > 0) {
+		if (TM->GetTurn() > 0 && stgProgress > 0) {
 //			eneCommand = AIpat(plaCommandBef - 1, eneCommandBef);
 			eneCommand = APS.AIpat();
 		}
@@ -1043,7 +1070,7 @@ int main(void)
 		}
 		*/
 		plaSelectedCommand = plaCommand;
-		if (T.GetTurn() > 0) {
+		if (TM->GetTurn() > 0) {
 //			SaveAI(plaCommandBef - 1, eneCommandBef);
 			APS.SaveAI();
 		}
@@ -1268,10 +1295,10 @@ int main(void)
 			printf("お互いに睨みあっている\n");
 		}
 		/******************************************************************************************************************/
-		if ((T.TurnRemains()) <= 5 && (T.TurnRemains() >= 0)) {
-			printf("\n\aセットまであと%dターン\n\n", T.TurnRemains());
+		if ((TM->GetTurnRemains()) <= 5 && (TM->GetTurnRemains() >= 0)) {
+			printf("\n\aセットまであと%dターン\n\n", TM->GetTurnRemains());
 		}
-		if (T.TurnRemains() == 0) {
+		if (TM->GetTurnRemains() == 0) {
 			printf("\nセット!!\n");
 			set_flg = true;
 		}
@@ -1441,7 +1468,7 @@ int main(void)
 		}
 		pla.Revenge();
 		ene.Revenge();
-		/*if (end != 1)*/T.PlusTurn();//ターン増加
+		/*if (end != 1)*/TM->TurnPlus();//ターン増加
 //		if (end == 1)turn--;//ターン減少
 		if (pla.GetDmg() > 0) {
 			DM.SetData(2);
@@ -1598,7 +1625,7 @@ int main(void)
 		/********************************************************************/
 		if ((pla.GetHP() <= 0 || ene.GetHP() <= 0) || set_flg) {
 			fcclear;
-			if (EM.GetEi() == 9) {
+			if (ED->GetEnemyId() == 9) {
 				dislike = dislike - 1;
 				randchar(1000);
 				dataSave();
@@ -1712,7 +1739,7 @@ int main(void)
 				/**************/
 				if (nofi == 2)totalpo = totalpo * 2, printf("アイテムの効果で取得経験値+100%%\n");
 				if ((wl != WIN) && (b >= 3)) {
-					if ((((stgProgress > 0) && (EM.GetEi() == stgProgress + 1)) || ((stgProgress == 0) && (EM.GetEi() <= 1))) && (stgProgress <= 6)) {
+					if ((((stgProgress > 0) && (ED->GetEnemyId() == stgProgress + 1)) || ((stgProgress == 0) && (ED->GetEnemyId() <= 1))) && (stgProgress <= 6)) {
 						stgProgress++;
 						printf("奥に進んだ!!\n");
 					}
@@ -1754,16 +1781,16 @@ int main(void)
 					break;
 
 				case WIN:
-					if ((((stgProgress > 0) && (EM.GetEi() == stgProgress + 1)) || ((stgProgress == 0) && (EM.GetEi() <= 1))) && (stgProgress <= 6)) {
+					if ((((stgProgress > 0) && (ED->GetEnemyId() == stgProgress + 1)) || ((stgProgress == 0) && (ED->GetEnemyId() <= 1))) && (stgProgress <= 6)) {
 						stgProgress++;
 						printf("奥に進んだ!!\n");
 					}
-					if (EM.GetEi() == 7) {//次ステージへ
+					if (ED->GetEnemyId() == 7) {//次ステージへ
 						printf("記憶の深層に足を進める…\n");
 						nextStage();
 						stage++;
 					}
-					if (EM.GetEi() == 8) {
+					if (ED->GetEnemyId() == 8) {
 						if (itemn[10] < 7)itemn[10]++;
 						printf("喜楽の記憶を手に入れた!!\n");
 					}

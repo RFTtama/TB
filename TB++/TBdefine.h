@@ -19,7 +19,6 @@
 #define RANK_NUM 8
 #define cMaxn 0
 #define cnown 1
-#define ENAMES 25
 #define READ 0
 #define WRITE 1
 #define LOSE 1

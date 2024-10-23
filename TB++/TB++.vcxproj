@@ -139,24 +139,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ItemDatas.cpp" />
-    <ClCompile Include="TB.cpp" />
+    <ClCompile Include="EnemyDefine.c" />
+    <ClCompile Include="StrikeGageManager.c" />
+    <ClCompile Include="TB.c" />
+    <ClCompile Include="TurnManager.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="Class.h" />
+    <ClInclude Include="EnemyDefine.h" />
     <ClInclude Include="ItemClass.h" />
     <ClInclude Include="MT.h" />
     <ClInclude Include="prototype.h" />
     <ClInclude Include="shop.h" />
+    <ClInclude Include="StrikeGageManager.h" />
     <ClInclude Include="TBAI.h" />
     <ClInclude Include="TBdefine.h" />
     <ClInclude Include="TBfunc.h" />
     <ClInclude Include="TBglobal.h" />
-    <ClInclude Include="TBinclude.h" />
     <ClInclude Include="GeneralFunctions.h" />
     <ClInclude Include="Text.h" />
+    <ClInclude Include="TurnManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
