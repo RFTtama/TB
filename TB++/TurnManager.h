@@ -1,7 +1,4 @@
 #pragma once
-#define G1 700
-#define G2 90
-#define G3 250
 #define MAX_TURN 80
 
 /* ƒNƒ‰ƒX‚Ì‚Ğ‚ÈŒ^		*/
