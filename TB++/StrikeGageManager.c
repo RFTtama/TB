@@ -1,5 +1,17 @@
 #include "StrikeGageManager.h"
 
+/* プロトタイプ宣言									*/
+static void ClearNowSG(int);
+static void SetMaxSG(short, int);
+static short GetMaxSG(int);
+static void MinusMaxSG(int);
+static void PlusMaxSG(int);
+static void PlusNowSG(short, int);
+static short GetNowSG(int);
+static double GetPercentage(int);
+static unsigned char GetStrikeFlg(int);
+static void ClearStrikeFlg(int);
+
 /* 変数関連											*/
 static short maxSG[2] = { -1, -1 };
 static short nowSG[2] = { -1, -1 };
@@ -34,6 +46,7 @@ static void SetMaxSG(short value, int tag)
 	case SGM_ALL:
 		maxSG[0] = value;
 		maxSG[1] = value;
+		//ここの部分が外部参照なので、変更する必要あり
 		pla.SetCritper(100 + value * 5, D_EQUAL);
 		ene.SetCritper(100 + value * 5, D_EQUAL);
 		break;
